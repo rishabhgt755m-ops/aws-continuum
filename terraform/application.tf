@@ -57,6 +57,7 @@ resource "aws_launch_template" "app" {
   user_data = base64encode(<<-USERDATA
     #!/bin/bash
     set -euxo pipefail
+    dnf install -y postgresql17
     mkdir -p /opt/continuum
 
     printf '%s' '${filebase64("${path.module}/../app/server.py")}' | base64 -d > /opt/continuum/server.py
@@ -69,6 +70,7 @@ resource "aws_launch_template" "app" {
 
     [Service]
     User=nobody
+    Environment="DB_PROXY_HOST=${aws_db_proxy.app.endpoint}"
     ExecStart=/usr/bin/python3 /opt/continuum/server.py
     Restart=always
     RestartSec=3
@@ -145,7 +147,15 @@ resource "aws_autoscaling_group" "app" {
 
   launch_template {
     id      = aws_launch_template.app.id
-    version = "$Latest"
+    version = aws_launch_template.app.latest_version
+  }
+
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 50
+      instance_warmup        = 60
+    }
   }
 
   dynamic "tag" {
