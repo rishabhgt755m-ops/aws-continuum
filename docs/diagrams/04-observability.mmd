@@ -1,0 +1,10 @@
+flowchart LR
+  ALB[ALB target health, latency and 5xx] --> CW[CloudWatch metrics]
+  EC2[EC2 CPU] --> CW
+  RDS[RDS CPU and free storage] --> CW
+  CW --> DASH[CloudWatch dashboard]
+  CW --> ALARMS[Five metric alarms]
+  ALARMS --> SNS[SNS topic]
+  SNS --> EMAIL[Confirmed email subscription]
+  TRAIL[CloudTrail events] -.-> EVIDENCE[Private verification evidence]
+  DASH -.-> EVIDENCE

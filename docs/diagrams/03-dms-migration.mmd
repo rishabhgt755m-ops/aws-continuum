@@ -1,0 +1,8 @@
+flowchart LR
+  SRC[(Legacy RDS PostgreSQL)] -->|Full load| DMS[AWS DMS replication instance]
+  SRC -->|Logical changes / CDC| DMS
+  DMS -->|Apply migrated records| DST[(Target RDS PostgreSQL)]
+  SECRETS[Secrets Manager] -.->|Source + target credentials| DMS
+  EP[Secrets Manager VPC endpoint] -.->|Private API access| DMS
+  VERIFY[SQL validation and CDC checks] -.-> SRC
+  VERIFY -.-> DST
