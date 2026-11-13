@@ -8,9 +8,9 @@ The application runs on two private EC2 instances across Availability Zones in I
 
 ![Continuum AWS architecture](docs/diagrams/01-aws-architecture.svg)
 
-[Architecture and request paths](docs/architecture.md) | [Interactive recovery walkthrough](docs/interactive/index.html) | [DMS migration](docs/architecture.md#postgresql-migration) | [Monitoring](docs/architecture.md#monitoring-and-alerting)
+[Architecture and request paths](docs/architecture.md) | [Interactive recovery walkthrough](https://rishabhgt755m-ops.github.io/aws-continuum/interactive/) | [DMS migration](docs/architecture.md#postgresql-migration) | [Monitoring](docs/architecture.md#monitoring-and-alerting)
 
-The recovery walkthrough is an HTML page with selectable EC2 and RDS failure scenarios. Once GitHub Pages is enabled, it can also be opened as a standalone website.
+The recovery walkthrough is an HTML page with selectable EC2 and RDS failure scenarios. The interactive walkthrough is available through GitHub Pages.
 
 ## What I built
 
